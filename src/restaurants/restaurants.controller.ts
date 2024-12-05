@@ -1,4 +1,12 @@
-import { Controller, Get, Logger, Patch, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Logger,
+  Param,
+  Patch,
+  Post,
+} from '@nestjs/common';
 // import { MessagePattern, Payload } from '@nestjs/microservices';
 import { RestaurantsService } from './restaurants.service';
 import { CommandRpc } from '../utils/command-rpc.decorator';
@@ -24,7 +32,7 @@ export class RestaurantsController {
   @Post()
   @ApiOperation({ description: 'add a restaurant' })
   @CommandRpc('restaurants', 'restaurants', 'add_restaurant')
-  async addRestaurant(data: AddRestaurantDto) {
+  async addRestaurant(@Body() data: AddRestaurantDto) {
     this.logger.verbose(this.addRestaurant.name);
     const { __meta, ...d } = data;
     return this.service.addRestaurant(d, __meta);
@@ -33,25 +41,29 @@ export class RestaurantsController {
   @Get('/:id/profile')
   @ApiOperation({ description: 'add a restaurant' })
   @QueryRpc('restaurants', 'restaurants', 'get_restaurant_profile')
-  async getRestaurantProfile(data: GetRestaurantProfileDto) {
+  async getRestaurantProfile(@Param() data: GetRestaurantProfileDto) {
     this.logger.verbose(this.getRestaurantProfile.name);
     const { __meta, ...d } = data;
     return this.service.getRestaurantProfile(d, __meta);
   }
 
-  @Post('/:userId/userPreferences')
+  @Post('/:userId/user_preferences')
   @ApiOperation({ description: 'set user preferences for a restaurant' })
   @CommandRpc('restaurants', 'restaurants', 'set_user_restaurant_preferences')
-  async setUserRestaurantPreferences(data: SetUserRestaurantPreferencesDto) {
+  async setUserRestaurantPreferences(
+    @Body() data: SetUserRestaurantPreferencesDto,
+  ) {
     this.logger.verbose(this.setUserRestaurantPreferences.name);
     const { __meta, ...d } = data;
     return this.service.setUserRestaurantPreferences(d, __meta);
   }
 
-  @Get('/:userId/userPreferences')
+  @Get('/:userId/user_preferences')
   @ApiOperation({ description: 'add a restaurant' })
   @QueryRpc('restaurants', 'restaurants', 'get_user_restaurant_preferences')
-  async getUserRestaurantPreferences(data: GetUserRestaurantPreferencesDto) {
+  async getUserRestaurantPreferences(
+    @Param() data: GetUserRestaurantPreferencesDto,
+  ) {
     this.logger.verbose(this.getUserRestaurantPreferences.name);
     const { __meta, ...d } = data;
     return this.service.getUserRestaurantPreferences(d, __meta);
@@ -59,10 +71,10 @@ export class RestaurantsController {
 
   /********************************************************************* */
 
-  @Get('/:id/allMenus')
+  @Get('/:id/all_menus')
   @ApiOperation({ description: 'get restaurant menus' })
   @QueryRpc('restaurants', 'restaurants', 'get_restaurant_menus')
-  async getRestaurantMenus(data: GetRestaurantMenusDto) {
+  async getRestaurantMenus(@Param() data: GetRestaurantMenusDto) {
     this.logger.verbose(this.getRestaurantMenus.name);
     const { __meta, ...d } = data;
     return this.service.getRestaurantMenus(d, __meta);
@@ -71,7 +83,7 @@ export class RestaurantsController {
   @Post('/:id/menu')
   @ApiOperation({ description: 'add a restaurant menu' })
   @CommandRpc('restaurants', 'restaurants', 'add_restaurant_menu')
-  async addRestaurantMenu(data: AddRestaurantMenuDto) {
+  async addRestaurantMenu(@Body() data: AddRestaurantMenuDto) {
     this.logger.verbose(this.addRestaurantMenu.name);
     const { __meta, ...d } = data;
     return this.service.addRestaurantMenu(d, __meta);
@@ -80,16 +92,16 @@ export class RestaurantsController {
   @Patch('/:id/menu')
   @ApiOperation({ description: 'update a restaurant menu' })
   @CommandRpc('restaurants', 'restaurants', 'update_restaurant_menu')
-  async updateRestaurantMenu(data: UpdateRestaurantMenuDto) {
+  async updateRestaurantMenu(@Body() data: UpdateRestaurantMenuDto) {
     this.logger.verbose(this.updateRestaurantMenu.name);
     const { __meta, ...d } = data;
     return this.service.updateRestaurantMenu(d, __meta);
   }
 
-  @Patch('/:id/menuItem')
+  @Patch('/:id/menu_item')
   @ApiOperation({ description: 'update a restaurant menu item' })
   @CommandRpc('restaurants', 'restaurants', 'update_menu_item')
-  async updateMenuItem(data: UpdateMenuItemDto) {
+  async updateMenuItem(@Body() data: UpdateMenuItemDto) {
     this.logger.verbose(this.updateMenuItem.name);
     const { __meta, ...d } = data;
     return this.service.updateMenuItem(d, __meta);
