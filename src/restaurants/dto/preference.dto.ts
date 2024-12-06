@@ -7,10 +7,11 @@ import { UserInputAnswerDto } from './user-input-answer.dto';
 import { YesNoAnswerDto } from './yes-no-answer.dto';
 
 export class PreferenceDto {
+  @ValidateNested()
   @Type(() => IdentifiableDto)
   @IsNotEmpty()
   @ApiProperty()
-  question: { id: string };
+  question: IdentifiableDto;
 
   @ValidateNested({ each: true })
   @Type(() => IdentifiableDto)
