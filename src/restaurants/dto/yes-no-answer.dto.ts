@@ -10,17 +10,7 @@ import { IdentifiableDto } from './identifiable.dto';
 import { Type } from 'class-transformer';
 
 export class YesNoAnswerDto {
-  @ValidateNested()
-  @Type(() => IdentifiableDto)
-  @IsNotEmpty()
-  @ApiProperty()
-  question: IdentifiableDto;
-
   @IsString()
   @ApiProperty()
   answerText?: string;
-
-  @IsOptional()
-  @ApiHideProperty()
-  __meta?: Metadata;
 }
