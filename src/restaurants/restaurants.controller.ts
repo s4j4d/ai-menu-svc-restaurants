@@ -20,7 +20,7 @@ import {
   UpdateMenuItemDto,
   UpdateRestaurantMenuDto,
 } from './dto';
-import { ApiOperation } from '@nestjs/swagger';
+import { ApiOperation, ApiParam } from '@nestjs/swagger';
 import { GetRestaurantMenusDto } from './dto/get-restaurant-menus.dto';
 // import { Payload } from '@nestjs/microservices';
 
@@ -39,9 +39,10 @@ export class RestaurantsController {
   }
 
   @Get('/:id/profile')
-  @ApiOperation({ description: 'add a restaurant' })
+  @ApiOperation({ description: 'get a restaurant profile' })
   @QueryRpc('restaurants', 'restaurants', 'get_restaurant_profile')
-  async getRestaurantProfile(@Param() data: GetRestaurantProfileDto) {
+  @ApiParam({ name: 'id', example: 'ab51d4d3-e8d3-4754-828d-f943237ecd6f' })
+  async getRestaurantProfile(data: GetRestaurantProfileDto) {
     this.logger.verbose(this.getRestaurantProfile.name);
     const { __meta, ...d } = data;
     return this.service.getRestaurantProfile(d, __meta);
@@ -60,10 +61,9 @@ export class RestaurantsController {
 
   @Get('/:userId/user_preferences')
   @ApiOperation({ description: 'add a restaurant' })
+  @ApiParam({ name: 'userId', example: 'ab51d4d3-e8d3-4754-828d-f943237ecd6f' })
   @QueryRpc('restaurants', 'restaurants', 'get_user_restaurant_preferences')
-  async getUserRestaurantPreferences(
-    @Param() data: GetUserRestaurantPreferencesDto,
-  ) {
+  async getUserRestaurantPreferences(data: GetUserRestaurantPreferencesDto) {
     this.logger.verbose(this.getUserRestaurantPreferences.name);
     const { __meta, ...d } = data;
     return this.service.getUserRestaurantPreferences(d, __meta);
@@ -73,8 +73,9 @@ export class RestaurantsController {
 
   @Get('/:id/all_menus')
   @ApiOperation({ description: 'get restaurant menus' })
+  @ApiParam({ name: 'id', example: 'ab51d4d3-e8d3-4754-828d-f943237ecd6f' })
   @QueryRpc('restaurants', 'restaurants', 'get_restaurant_menus')
-  async getRestaurantMenus(@Param() data: GetRestaurantMenusDto) {
+  async getRestaurantMenus(data: GetRestaurantMenusDto) {
     this.logger.verbose(this.getRestaurantMenus.name);
     const { __meta, ...d } = data;
     return this.service.getRestaurantMenus(d, __meta);
