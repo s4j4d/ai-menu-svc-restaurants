@@ -35,7 +35,7 @@ export class RestaurantOrdersRepository {
       const status = data.ordersStatus === 'pending' ? 'pending' : 'completed';
       Object.assign(query, { status });
     }
-    return this.restaurantOrdersModel.find(query);
+    return this.restaurantOrdersModel.find(query).sort({ createdA: -1 });
   }
 
   //TODO: add pagination for this endpoint
@@ -71,7 +71,7 @@ export class RestaurantOrdersRepository {
         specialRequests: data?.specialRequests,
         tableNumber: data?.tableNumber,
         address: data?.address,
-        items: data?.orderItems,
+        items: data?.items,
       },
     );
   }

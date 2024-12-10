@@ -21,8 +21,8 @@ export class RestaurantEntity {
   @Prop({ required: false })
   address?: string;
 
-  @Prop({ type: Array<IdentifiableDto>, required: false })
-  logoDocumentIds?: IdentifiableDto[];
+  @Prop({ type: Array<string>, required: false })
+  logoIds?: string[];
 
   @Prop({ required: false })
   province?: string;

@@ -4,6 +4,7 @@ import {
   IsNotEmpty,
   IsOptional,
   ValidateNested,
+  IsNumber,
 } from 'class-validator';
 import { Metadata } from '../../utils/interfaces/metadata.interface';
 import { IdentifiableDto } from '../../utils/dtos';
@@ -19,7 +20,6 @@ export class CreateOrderDto {
   })
   id: string;
 
-  @IsString()
   @IsNotEmpty()
   @ApiProperty({
     description: 'The name of the restaurant',
@@ -27,17 +27,16 @@ export class CreateOrderDto {
   })
   restaurant: IdentifiableDto;
 
-  @ValidateNested({ each: true })
+  @ValidateNested()
   @IsNotEmpty()
   @Type(() => IdentifiableDto)
   @ApiProperty({
-    description: 'The phone number of the restaurant',
-    example: '+98 21 84202',
-    required: false,
+    description: 'user object',
+    example: { id: '8301e47e-4343-4a3f-bce5-7477c274bdf8' },
   })
-  users: IdentifiableDto[];
+  user: IdentifiableDto;
 
-  @IsString()
+  @IsNumber()
   @IsOptional()
   @ApiProperty({
     description: 'Table number',
@@ -60,10 +59,12 @@ export class CreateOrderDto {
   @Type(() => OrderItemDto)
   @ApiProperty({
     description: 'Order items',
-    example: { id: '589d34ac-2173-4b40-ba65-abceb185c560' },
+    example: [
+      { id: '589d34ac-2173-4b40-ba65-abceb185c560', name: 'قرمه سبزی' },
+    ],
     required: false,
   })
-  orderItems?: OrderItemDto[];
+  items?: OrderItemDto[];
 
   @IsString()
   @IsOptional()

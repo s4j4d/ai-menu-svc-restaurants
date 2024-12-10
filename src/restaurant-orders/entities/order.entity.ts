@@ -36,8 +36,8 @@ export class RestaurantOrderEntity {
   @Prop({ type: IdentifiableDto, required: true })
   restaurant: IdentifiableDto;
 
-  @Prop({ type: Array<IdentifiableDto>, required: true })
-  users: IdentifiableDto[];
+  @Prop({ type: IdentifiableDto, required: true })
+  user: IdentifiableDto;
 
   @Prop({ required: true })
   tableNumber?: number;

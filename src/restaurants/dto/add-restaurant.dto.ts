@@ -1,5 +1,10 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString, IsNotEmpty, IsOptional } from 'class-validator';
+import {
+  IsString,
+  IsNotEmpty,
+  IsOptional,
+  // ValidateNested,
+} from 'class-validator';
 import { Metadata } from '../../utils/interfaces/metadata.interface';
 
 export class AddRestaurantDto {
@@ -46,14 +51,14 @@ export class AddRestaurantDto {
   })
   address?: string;
 
-  @IsString()
+  // @ValidateNested({ each: true })
   @IsOptional()
   @ApiProperty({
     description: 'The logo document id of the restaurant',
     example: 'e13bbf3a-07ec-45ae-bd1f-a682966f00ac',
     required: false,
   })
-  logoId?: string;
+  logoIds?: string[];
 
   @IsString()
   @IsOptional()
