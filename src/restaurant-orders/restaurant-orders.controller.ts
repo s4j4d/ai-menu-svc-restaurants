@@ -20,7 +20,7 @@ export class RestaurantOrdersController {
   @Post()
   @ApiOperation({ description: 'create an order' })
   @CommandRpc('restaurant-orders', 'restaurant-orders', 'create_order')
-  async createRestaurantOrder(data: CreateOrderDto) {
+  async createRestaurantOrder(@Body() data: CreateOrderDto) {
     this.logger.verbose(this.createRestaurantOrder.name);
     const { __meta, ...d } = data;
     return this.service.createRestaurantOrder(d, __meta);
