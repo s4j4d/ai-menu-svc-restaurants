@@ -3,11 +3,13 @@ import { RestaurantsModule } from './restaurants/restaurants.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { RabbitMQModule } from '@golevelup/nestjs-rabbitmq';
 import { MongooseModule } from '@nestjs/mongoose';
+import { RestaurantOrdersModule } from './restaurant-orders/restaurant-orders.module';
 
 @Global()
 @Module({
   imports: [
     RestaurantsModule,
+    RestaurantOrdersModule,
     ConfigModule.forRoot({
       isGlobal: true, // Make it available everywhere
       envFilePath: process.env.NODE_ENV

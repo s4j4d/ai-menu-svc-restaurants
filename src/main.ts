@@ -6,6 +6,7 @@ import { v4 as uuid4 } from 'uuid';
 import { ConfigService } from '@nestjs/config';
 import { swaggerConfig } from './utils/swaggers/swagger-config';
 import { RestaurantsModule } from './restaurants/restaurants.module';
+import { RestaurantOrdersModule } from './restaurant-orders/restaurant-orders.module';
 
 async function bootstrap() {
   const logger = new Logger(bootstrap.name);
@@ -44,6 +45,16 @@ async function bootstrap() {
     app,
     name: 'restaurants',
     module: RestaurantsModule,
+    server: {
+      gateway: swaggerGateway,
+      service: swaggerService,
+    },
+  });
+
+  swaggerConfig({
+    app,
+    name: 'restaurant-orders',
+    module: RestaurantOrdersModule,
     server: {
       gateway: swaggerGateway,
       service: swaggerService,

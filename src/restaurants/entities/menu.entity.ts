@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 import { MenuItemEntity } from './menu-item.entity';
-import { IdentifiableDto } from '../dto';
+import { IdentifiableDto } from '../../utils/dtos';
 
 @Schema({ timestamps: true }) // Automatically adds createdAt and updatedAt fields
 export class MenuEntity {
@@ -31,3 +31,5 @@ export class MenuEntity {
 
 export type MenuEntityDocument = MenuEntity & Document;
 export const MenuEntitySchema = SchemaFactory.createForClass(MenuEntity);
+
+MenuEntitySchema.index({ 'restaurant.id': 1 }, { unique: true });

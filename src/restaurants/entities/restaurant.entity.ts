@@ -1,5 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
+import { IdentifiableDto } from '../../utils/dtos';
 
 export type RestaurantEntityDocument = RestaurantEntity & Document;
 
@@ -20,8 +21,8 @@ export class RestaurantEntity {
   @Prop({ required: false })
   address?: string;
 
-  @Prop({ required: false })
-  logoDocumentId?: string;
+  @Prop({ type: Array<IdentifiableDto>, required: false })
+  logoDocumentIds?: IdentifiableDto[];
 
   @Prop({ required: false })
   province?: string;

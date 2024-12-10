@@ -2,8 +2,8 @@
 
 import { IsNotEmpty, IsOptional, IsString } from 'class-validator';
 import { ApiHideProperty, ApiProperty } from '@nestjs/swagger';
-import { IdentifiableDto } from './identifiable.dto';
 import { Metadata } from '../../utils/interfaces/metadata.interface';
+import { IdentifiableDto } from '../../utils/dtos';
 
 export class GetUserRestaurantPreferencesDto {
   @IsString()

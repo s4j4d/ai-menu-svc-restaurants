@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
-import { IdentifiableDto } from '../dto';
 import { Preference } from './preference.entity';
+import { IdentifiableDto } from '../../utils/dtos';
 
 export type UserPreferencesEntityDocument = UserPreferencesEntity & Document;
 

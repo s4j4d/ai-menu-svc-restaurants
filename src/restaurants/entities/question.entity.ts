@@ -5,7 +5,6 @@ export type QuestionEntityDocument = QuestionEntity & Document;
 
 @Schema({ collection: 'questions', timestamps: true })
 export class QuestionEntity {
-
   @Prop({ required: true })
   _id: string;
   @Prop({ required: true })
@@ -33,4 +32,5 @@ export class QuestionEntity {
   isRequired?: boolean;
 }
 
-export const QuestionEntitySchema = SchemaFactory.createForClass(QuestionEntity);
+export const QuestionEntitySchema =
+  SchemaFactory.createForClass(QuestionEntity);

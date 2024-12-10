@@ -1,6 +1,5 @@
 export * from './add-restaurant.dto';
 export * from './get-restaurant-profile.dto';
-export * from './identifiable.dto';
 export * from './slider-answer.dto';
 export * from './user-input-answer.dto';
 export * from './yes-no-answer.dto';

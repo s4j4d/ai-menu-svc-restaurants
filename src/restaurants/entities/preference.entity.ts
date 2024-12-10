@@ -1,5 +1,5 @@
 import { Prop, Schema } from '@nestjs/mongoose';
-import { IdentifiableDto } from '../dto';
+import { IdentifiableDto } from '../../utils/dtos';
 
 @Schema({ timestamps: true }) // Automatically adds createdAt and updatedAt fields
 export class Preference {

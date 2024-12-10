@@ -6,9 +6,9 @@ import {
   IsOptional,
   IsString,
 } from 'class-validator';
-import { IdentifiableDto } from './identifiable.dto';
 import { PreferenceDto } from './preference.dto';
 import { Metadata } from '../../utils/interfaces/metadata.interface';
+import { IdentifiableDto } from '../../utils/dtos';
 
 export class SetUserRestaurantPreferencesDto {
   @IsString()

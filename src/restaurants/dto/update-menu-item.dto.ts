@@ -6,9 +6,9 @@ import {
   ValidateNested,
 } from 'class-validator';
 import { Metadata } from '../../utils/interfaces/metadata.interface';
-import { IdentifiableDto } from './identifiable.dto';
 import { Type } from 'class-transformer';
 import { MenuItemEntityDto } from './menu-item-entity.dto';
+import { IdentifiableDto } from '../../utils/dtos';
 
 export class UpdateMenuItemDto {
   @IsString()
