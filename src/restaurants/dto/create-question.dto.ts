@@ -51,7 +51,8 @@ export class CreateQuestionDto {
   @ApiProperty({
     description:
       'Relevant for yes/no or multiple-choice questions E.g., ["Yes", "No"] or other choices',
-    example: '["Yes", "No"]',
+    example: ['Yes', 'No'],
+    required: false,
   })
   options?: string[];
 
@@ -59,7 +60,15 @@ export class CreateQuestionDto {
   @IsOptional()
   @ApiProperty({
     description: 'Placeholder for text input fields',
-    example: 'Enter your answer here ...',
+    example: [
+      {
+        label: 'hhhh',
+        min: 0,
+        max: 0,
+        step: 1,
+        scale: 'kilogram',
+      },
+    ],
     required: false,
   })
   sliders?: SliderDto[];
@@ -69,10 +78,13 @@ export class CreateQuestionDto {
   @ApiProperty({
     description: 'Whether the question is required',
     example: 'true',
+    required: false,
   })
   isRequired?: boolean;
 
   @IsOptional()
-  @ApiProperty()
+  @ApiProperty({
+    required: false,
+  })
   __meta?: Metadata;
 }
