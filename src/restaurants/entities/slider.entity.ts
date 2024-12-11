@@ -3,4 +3,5 @@ export class SliderEntity {
   min: number;
   max: number;
   step: number;
+  scale?: string;
 }

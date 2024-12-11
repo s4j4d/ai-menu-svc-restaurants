@@ -49,7 +49,7 @@ export class RestaurantOrderEntity {
   totalAmount: number; // Total amount for the order
 
   @Prop({ type: Array<IdentifiableDto>, required: false })
-  items?: IdentifiableDto[];
+  items?: OrderItem[];
 
   @Prop({ required: false })
   status?: string;

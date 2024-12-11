@@ -8,6 +8,7 @@ import {
 } from './entities/restaurant.entity';
 import {
   AddRestaurantDto,
+  CreateQuestionDto,
   GetUserRestaurantPreferencesDto,
   UpdateMenuItemDto,
   UpdateRestaurantMenuDto,
@@ -20,6 +21,10 @@ import {
 } from './entities/user-preferences.entity';
 import { MenuEntity, MenuEntityDocument } from './entities/menu.entity';
 import { AddRestaurantMenuDto } from './dto/add-restaurant-menu.dto';
+import {
+  QuestionEntity,
+  QuestionEntityDocument,
+} from './entities/question.entity';
 @Injectable()
 export class RestaurantsRepository {
   private readonly logger = new Logger(RestaurantsRepository.name);
@@ -31,6 +36,8 @@ export class RestaurantsRepository {
     private preferenceModel: Model<UserPreferencesEntityDocument>,
     @InjectModel(MenuEntity.name)
     private menuModel: Model<MenuEntityDocument>,
+    @InjectModel(QuestionEntity.name)
+    private questionModel: Model<QuestionEntityDocument>,
   ) {}
 
   // remember we need redis and status changes for the microservice structure and eliminating race conditions
@@ -93,5 +100,19 @@ export class RestaurantsRepository {
       { 'items.id': data.id },
       { $set: { 'items.$': data } },
     );
+  }
+
+  async createQuestion(data: CreateQuestionDto) {
+    return new this.questionModel({ ...data, _id: data.questionId }).save();
+  }
+  async getQuestionById(id: string) {
+    return this.questionModel.findOne({
+      deletedAt: null,
+      _id: id,
+    });
+  }
+
+  async getAllQuestions() {
+    return this.questionModel.find();
   }
 }

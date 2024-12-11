@@ -21,9 +21,13 @@ export class RestaurantOrdersController {
   @ApiOperation({ description: 'create an order' })
   @CommandRpc('restaurant-orders', 'restaurant-orders', 'create_order')
   async createRestaurantOrder(@Body() data: CreateOrderDto) {
-    this.logger.verbose(this.createRestaurantOrder.name);
-    const { __meta, ...d } = data;
-    return this.service.createRestaurantOrder(d, __meta);
+    try {
+      this.logger.verbose(this.createRestaurantOrder.name);
+      const { __meta, ...d } = data;
+      return this.service.createRestaurantOrder(d, __meta);
+    } catch (error) {
+      return { status: 400, message: error.message };
+    }
   }
 
   @Get('/restaurant/:restaurantId/orders')

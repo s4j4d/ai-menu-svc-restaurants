@@ -8,6 +8,8 @@ import {
 import { AddRestaurantDto } from './dto/add-restaurant.dto';
 import { Metadata } from '../utils/interfaces/metadata.interface';
 import {
+  CreateQuestionDto,
+  GetQuestionsDto,
   GetRestaurantProfileDto,
   GetUserRestaurantPreferencesDto,
   SetUserRestaurantPreferencesDto,
@@ -268,6 +270,65 @@ export class RestaurantsService {
             {
               domain: 'Restaurants',
               context: this.getRestaurantMenus.name,
+              error: error.message,
+            },
+          ],
+        },
+      };
+    }
+  }
+
+  /******************************************************************* */
+
+  async createQuestion(data: CreateQuestionDto, meta: Metadata) {
+    this.logger.log(this.createQuestion.name);
+    try {
+      const question = await this.repository.getQuestionById(data.questionId);
+      if (question) throw new DuplicateIdException(data.questionId);
+      await this.repository.createQuestion(data);
+      return {
+        success: true,
+        data,
+        meta,
+      };
+    } catch (error) {
+      this.logger.error(error);
+      return {
+        success: false,
+        data,
+        meta: {
+          messages: [
+            {
+              domain: 'Restaurants',
+              context: this.createQuestion.name,
+              error: error.message,
+            },
+          ],
+        },
+      };
+    }
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  async getAllQuestions(data: GetQuestionsDto, meta: Metadata) {
+    this.logger.log(this.getAllQuestions.name);
+    try {
+      const menus = await this.repository.getAllQuestions();
+      return {
+        status: true,
+        data: menus,
+        meta,
+      };
+    } catch (error) {
+      this.logger.error(error);
+      return {
+        success: false,
+        data,
+        meta: {
+          messages: [
+            {
+              domain: 'Restaurants',
+              context: this.getAllQuestions.name,
               error: error.message,
             },
           ],

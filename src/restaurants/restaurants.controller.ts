@@ -1,12 +1,4 @@
-import {
-  Body,
-  Controller,
-  Get,
-  Logger,
-  Param,
-  Patch,
-  Post,
-} from '@nestjs/common';
+import { Body, Controller, Get, Logger, Patch, Post } from '@nestjs/common';
 // import { MessagePattern, Payload } from '@nestjs/microservices';
 import { RestaurantsService } from './restaurants.service';
 import { CommandRpc } from '../utils/command-rpc.decorator';
@@ -14,6 +6,8 @@ import { QueryRpc } from '../utils/query-rpc.decorator';
 import {
   AddRestaurantDto,
   AddRestaurantMenuDto,
+  CreateQuestionDto,
+  GetQuestionsDto,
   GetRestaurantProfileDto,
   GetUserRestaurantPreferencesDto,
   SetUserRestaurantPreferencesDto,
@@ -24,7 +18,7 @@ import { ApiOperation, ApiParam } from '@nestjs/swagger';
 import { GetRestaurantMenusDto } from './dto/get-restaurant-menus.dto';
 // import { Payload } from '@nestjs/microservices';
 
-@Controller()
+@Controller('api/v1/restaurants')
 export class RestaurantsController {
   logger = new Logger(RestaurantsController.name);
   constructor(private readonly service: RestaurantsService) {}
@@ -108,6 +102,26 @@ export class RestaurantsController {
     return this.service.updateMenuItem(d, __meta);
   }
 
+  /********************************************************************* */
+
+  @Post('/question')
+  @ApiOperation({ description: 'create a new question' })
+  @CommandRpc('restaurants', 'restaurants', 'create_question')
+  async createQuestion(@Body() data: CreateQuestionDto) {
+    this.logger.verbose(this.createQuestion.name);
+    const { __meta, ...d } = data;
+    return this.service.createQuestion(d, __meta);
+  }
+
+  @Get('/question/all_questions')
+  @ApiOperation({ description: 'get all questions there is.' })
+  @ApiParam({ name: 'id', example: 'ab51d4d3-e8d3-4754-828d-f943237ecd6f' })
+  @QueryRpc('restaurants', 'restaurants', 'get_all_questions')
+  async getAllQuestions(data: GetQuestionsDto) {
+    this.logger.verbose(this.getAllQuestions.name);
+    const { __meta, ...d } = data;
+    return this.service.getAllQuestions(d, __meta);
+  }
   /**
    * Nestjs has implemented what we have done with sendCommand :)))))))
    * look for Nestjs microservices with rabbitmq

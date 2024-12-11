@@ -1,9 +1,9 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsOptional, IsString } from 'class-validator';
+import { IsNotEmpty, IsString } from 'class-validator';
 
 export class YesNoAnswerDto {
   @IsString()
-  @IsOptional()
+  @IsNotEmpty()
   @ApiProperty({
     example: 'yes',
   })

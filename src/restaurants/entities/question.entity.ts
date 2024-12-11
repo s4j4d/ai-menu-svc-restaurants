@@ -1,5 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
+import { SliderEntity } from './slider.entity';
 
 export type QuestionEntityDocument = QuestionEntity & Document;
 
@@ -12,18 +13,15 @@ export class QuestionEntity {
 
   @Prop({
     required: true,
-    enum: ['yes_no', 'slider', 'text'], // Enforces allowed question types
+    enum: ['choice', 'slider', 'text'], // Enforces allowed question types
   })
-  type: string; // The type of the question (e.g., yes/no, slider, text input)
+  type: string; // The type of the question (e.g., choice(mutiple-choice), slider, text input)
 
   @Prop({ type: [String], default: null }) // Relevant for yes/no or multiple-choice questions
   options?: string[]; // E.g., ["Yes", "No"] or other choices
 
-  @Prop({ type: Number, default: null }) // Relevant for sliders
-  min?: number; // Slider minimum value
-
-  @Prop({ type: Number, default: null }) // Relevant for sliders
-  max?: number; // Slider maximum value
+  @Prop({ type: Array<SliderEntity>, default: null })
+  sliders?: SliderEntity[];
 
   @Prop({ type: String, default: null }) // Relevant for text input
   placeholder?: string; // Placeholder for text input fields

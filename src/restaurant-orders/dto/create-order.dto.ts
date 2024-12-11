@@ -22,7 +22,7 @@ export class CreateOrderDto {
 
   @IsNotEmpty()
   @ApiProperty({
-    description: 'The name of the restaurant',
+    description: 'restaurant id',
     example: 'chargoon company',
   })
   restaurant: IdentifiableDto;
