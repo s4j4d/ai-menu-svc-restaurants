@@ -1,8 +1,11 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
-import { IsNotEmpty, ValidateNested } from 'class-validator';
-import { UserInputAnswerDto } from './user-input-answer.dto';
-import { YesNoAnswerDto } from './yes-no-answer.dto';
+import {
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+  ValidateNested,
+} from 'class-validator';
 import { IdentifiableDto } from '../../utils/dtos';
 import { SliderAnswerDto } from './slider-answer.dto';
 
@@ -12,15 +15,35 @@ export class PreferenceDto {
   @IsNotEmpty()
   @ApiProperty({
     description: 'id of the question',
-    example: { id: 'cd6bb0b3-41af-42b0-986a-3eb0747da771' },
+    example: { id: '303bc3c7-e8c9-48a9-9e00-0a8219253227' },
+    type: IdentifiableDto,
   })
   question: IdentifiableDto;
 
   @ValidateNested({ each: true })
-  @IsNotEmpty()
+  @Type(() => SliderAnswerDto)
+  @IsOptional()
   @ApiProperty({
     description: 'list of the answers to this question',
-    example: { id: 'cd6bb0b3-41af-42b0-986a-3eb0747da771' },
+    example: [
+      {
+        id: '057866cd-dcb5-4648-ab33-1c51ee5a1276',
+        answerValue: 2,
+      },
+      {
+        id: '057866cd-dcb5-4648-ab33-1c51ee5a1276',
+        answerValue: 3,
+      },
+    ],
+    type: [SliderAnswerDto],
   })
-  answers: (SliderAnswerDto | UserInputAnswerDto | YesNoAnswerDto)[];
+  answerValues?: SliderAnswerDto[];
+
+  @IsOptional()
+  @IsString()
+  @ApiProperty({
+    description: 'answer for the yes or no ,or text input field',
+    example: 'yes',
+  })
+  answerText?: string; // The user's answer as text
 }

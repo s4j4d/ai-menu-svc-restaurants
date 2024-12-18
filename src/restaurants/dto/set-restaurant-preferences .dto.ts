@@ -4,14 +4,14 @@ import {
   ValidateNested,
   IsNotEmpty,
   IsOptional,
-  IsString,
+  IsUUID,
 } from 'class-validator';
 import { PreferenceDto } from './preference.dto';
 import { Metadata } from '../../utils/interfaces/metadata.interface';
 import { IdentifiableDto } from '../../utils/dtos';
 
 export class SetUserRestaurantPreferencesDto {
-  @IsString()
+  @IsUUID()
   @IsNotEmpty()
   @ApiProperty({
     description: 'id',
@@ -22,13 +22,18 @@ export class SetUserRestaurantPreferencesDto {
   @ValidateNested()
   @Type(() => IdentifiableDto)
   @IsNotEmpty()
-  @ApiProperty()
+  @ApiProperty({
+    description: 'The user which we are setting the preferences for',
+  })
   user: IdentifiableDto;
 
   @ValidateNested({ each: true })
   @Type(() => PreferenceDto)
   @IsOptional()
-  @ApiProperty()
+  @ApiProperty({
+    description: 'preferences of the user',
+    type: [PreferenceDto],
+  })
   preferences?: PreferenceDto[];
 
   @IsOptional()

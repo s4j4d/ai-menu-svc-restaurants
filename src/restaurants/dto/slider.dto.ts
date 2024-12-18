@@ -1,7 +1,16 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsOptional } from 'class-validator';
+import { IsNotEmpty, IsOptional, IsUUID } from 'class-validator';
 
 export class SliderDto {
+  // we added the id because there might be more than one slider for each question
+  @IsOptional()
+  @IsUUID()
+  @ApiProperty({
+    description: 'id of the slider',
+    example: '14d21a4c-cfa5-438a-9866-49608d3d0a27',
+  })
+  id: string;
+
   @IsOptional()
   @ApiProperty({
     description: 'id of the question',
