@@ -13,7 +13,7 @@ export class QuestionEntity {
 
   @Prop({
     required: true,
-    enum: ['choice', 'slider', 'text'], // Enforces allowed question types
+    enum: ['choice', 'slider', 'text-input'], // Enforces allowed question types
   })
   type: string; // The type of the question (e.g., choice(mutiple-choice), slider, text input)
 

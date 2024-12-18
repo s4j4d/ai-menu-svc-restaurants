@@ -33,7 +33,7 @@ export class CreateQuestionDto {
       ' The type of the question (e.g., choice(mutiple-choice), slider, text input)',
     example: 'slider',
     required: true,
-    enum: ['choice', 'slider', 'text'],
+    enum: ['choice', 'slider', 'text-input'],
   })
   type: string;
 
