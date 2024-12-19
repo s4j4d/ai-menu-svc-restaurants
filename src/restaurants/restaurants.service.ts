@@ -69,14 +69,16 @@ export class RestaurantsService {
 
   async setUserRestaurantPreferences(
     data: SetUserRestaurantPreferencesDto,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     meta: Metadata,
   ) {
     this.logger.log(this.setUserRestaurantPreferences.name);
-    if (meta?.user?.id !== data.user.id)
-      throw new HttpException(
-        `user trying to set preferences for user ${data.user.id}`,
-        HttpStatus.UNAUTHORIZED,
-      );
+    //TODO: enable it
+    // if (meta?.user?.id !== data.user.id)
+    //   throw new HttpException(
+    //     `user trying to set preferences for user ${data.user.id}`,
+    //     HttpStatus.UNAUTHORIZED,
+    //   );
     const restaurant = await this.repository.getRestaurantById(data.id);
     if (restaurant)
       throw new HttpException(
