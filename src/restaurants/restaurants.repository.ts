@@ -66,7 +66,7 @@ export class RestaurantsRepository {
   }
 
   async setUserRestaurantPreferences(data: SetUserRestaurantPreferencesDto) {
-    return new this.preferenceModel(data).save();
+    return new this.preferenceModel({ ...data, _id: data.id }).save();
   }
 
   async getUserRestaurantPreferences(data: GetUserRestaurantPreferencesDto) {
