@@ -46,7 +46,7 @@ export class CreateQuestionDto {
   })
   placeholder?: string;
 
-  @IsString()
+  @ValidateNested({ each: true })
   @IsOptional()
   @ApiProperty({
     description:
