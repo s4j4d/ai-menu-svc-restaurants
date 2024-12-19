@@ -1,10 +1,16 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString, IsNotEmpty, IsOptional } from 'class-validator';
+import {
+  IsString,
+  IsNotEmpty,
+  IsOptional,
+  ValidateNested,
+  IsUUID,
+} from 'class-validator';
 import { Metadata } from '../../utils/interfaces/metadata.interface';
 import { IdentifiableDto } from '../../utils/dtos';
 
 export class AddRestaurantMenuDto {
-  @IsString()
+  @IsUUID()
   @IsNotEmpty()
   @ApiProperty({
     description: 'id',
@@ -29,8 +35,8 @@ export class AddRestaurantMenuDto {
   })
   description?: string;
 
-  @IsString()
-  @IsOptional()
+  @ValidateNested()
+  @IsNotEmpty()
   @ApiProperty({
     description: 'The restaurant menus belog to',
     example: { id: '3c1f5759-6481-466e-93cc-058b16541916' },
