@@ -165,7 +165,7 @@ export class RestaurantsService {
       const restaurant = await this.repository.getRestaurantById(
         data.restaurant.id,
       );
-      if (!restaurant) throw new RestaurantNotFound(data.id);
+      if (!restaurant) throw new RestaurantNotFound(data.restaurant.id);
       await this.repository.addRestaurantMenu(data);
       return {
         success: true,

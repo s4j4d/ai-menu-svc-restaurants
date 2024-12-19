@@ -15,6 +15,7 @@ async function bootstrap() {
   const configService = app.get(ConfigService);
   app.useGlobalPipes(
     new ValidationPipe({
+      forbidNonWhitelisted: true,
       exceptionFactory: (errors) => {
         // Format validation errors
         const customErrors = errors.map((err) => ({

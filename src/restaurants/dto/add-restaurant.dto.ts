@@ -51,7 +51,6 @@ export class AddRestaurantDto {
   })
   address?: string;
 
-  // @ValidateNested({ each: true })
   @IsOptional()
   @ApiProperty({
     description: 'The logo document id of the restaurant',

@@ -6,7 +6,6 @@ import {
   IsOptional,
   IsString,
   IsUUID,
-  ValidateNested,
 } from 'class-validator';
 
 export class MenuItemEntityDto {
@@ -40,8 +39,6 @@ export class MenuItemEntityDto {
   @ApiProperty({ required: false })
   calories?: number; // Optional calorie count
 
-  @ValidateNested({ each: true })
-  @Type(() => Array<string>)
   @IsOptional()
   @ApiProperty({ required: false })
   logoIds?: Array<string>; // Optional description of the

@@ -8,6 +8,7 @@ import {
 } from 'class-validator';
 import { Metadata } from '../../utils/interfaces/metadata.interface';
 import { IdentifiableDto } from '../../utils/dtos';
+import { MenuItemEntityDto } from './menu-item-entity.dto';
 
 export class AddRestaurantMenuDto {
   @IsUUID()
@@ -51,6 +52,15 @@ export class AddRestaurantMenuDto {
     required: false,
   })
   logoId?: string;
+
+  @ValidateNested({ each: true })
+  @IsOptional()
+  @ApiProperty({
+    description: 'Menu items',
+    required: false,
+    type: [MenuItemEntityDto],
+  })
+  items?: MenuItemEntityDto[]; // Array of menu items
 
   @IsOptional()
   @ApiProperty()
