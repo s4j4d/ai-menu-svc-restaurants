@@ -3,7 +3,7 @@ import { IsNotEmpty, IsOptional, IsUUID } from 'class-validator';
 
 export class SliderDto {
   // we added the id because there might be more than one slider for each question
-  @IsOptional()
+  @IsNotEmpty()
   @IsUUID()
   @ApiProperty({
     description: 'id of the slider',
@@ -17,24 +17,28 @@ export class SliderDto {
     example: 'saltiness',
   })
   label?: string;
+
   @IsNotEmpty()
   @ApiProperty({
     description: 'min value of the slider',
     example: 10,
   })
   min: number;
+
   @IsNotEmpty()
   @ApiProperty({
     description: 'max value of the slider',
     example: 0,
   })
   max: number;
+
   @IsNotEmpty()
   @ApiProperty({
     description: 'steps in which the value of the slider increases',
     example: 0,
   })
   step: number;
+
   @IsOptional()
   @ApiProperty({
     description: 'scale of the slider',
