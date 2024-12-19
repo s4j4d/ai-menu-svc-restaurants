@@ -32,4 +32,4 @@ export class MenuEntity {
 export type MenuEntityDocument = MenuEntity & Document;
 export const MenuEntitySchema = SchemaFactory.createForClass(MenuEntity);
 
-MenuEntitySchema.index({ 'restaurant.id': 1 }, { unique: true });
+MenuEntitySchema.index({ 'restaurant.id': 1 });
