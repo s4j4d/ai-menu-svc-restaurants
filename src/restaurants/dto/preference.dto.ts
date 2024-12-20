@@ -4,12 +4,21 @@ import {
   IsNotEmpty,
   IsOptional,
   IsString,
+  IsUUID,
   ValidateNested,
 } from 'class-validator';
 import { IdentifiableDto } from '../../utils/dtos';
 import { SliderAnswerDto } from './slider-answer.dto';
 
 export class PreferenceDto {
+  @IsNotEmpty()
+  @IsUUID()
+  @ApiProperty({
+    description: 'id of the preference',
+    example: '14d21a4c-cfa5-438a-9866-49608d3d0a27',
+  })
+  _id: string;
+
   @ValidateNested()
   @Type(() => IdentifiableDto)
   @IsNotEmpty()
