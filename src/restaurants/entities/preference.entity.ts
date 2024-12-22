@@ -7,7 +7,7 @@ export class Preference {
   @Prop({ required: true })
   _id: string;
 
-  @Prop({ type: IdentifiableDto, required: true, unique: true })
+  @Prop({ type: IdentifiableDto, required: true})
   question: IdentifiableDto; // Reference to the Question entity
 
   @Prop({ type: String, default: null }) // For text or yes/no answers
