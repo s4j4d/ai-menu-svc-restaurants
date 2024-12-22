@@ -5,6 +5,7 @@ import {
   IsOptional,
   ValidateNested,
   IsNumber,
+  IsUUID,
 } from 'class-validator';
 import { Metadata } from '../../utils/interfaces/metadata.interface';
 import { IdentifiableDto } from '../../utils/dtos';
@@ -12,7 +13,7 @@ import { Type } from 'class-transformer';
 import { OrderItemDto } from './order-item.dto';
 
 export class CreateOrderDto {
-  @IsString()
+  @IsUUID()
   @IsNotEmpty()
   @ApiProperty({
     description: 'id',
@@ -20,10 +21,11 @@ export class CreateOrderDto {
   })
   id: string;
 
+  @ValidateNested()
   @IsNotEmpty()
+  @Type(() => IdentifiableDto)
   @ApiProperty({
     description: 'restaurant id',
-    example: 'chargoon company',
   })
   restaurant: IdentifiableDto;
 
@@ -71,6 +73,7 @@ export class CreateOrderDto {
   @ApiProperty({
     description: 'Special requests regarding, making of the food.',
     example: 'please use lots of spices',
+    required: false,
   })
   specialRequests?: string; // Any special requests for the order
 
