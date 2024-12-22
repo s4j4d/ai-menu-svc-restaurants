@@ -2,7 +2,7 @@ import { Body, Controller, Get, Logger, Param, Post } from '@nestjs/common';
 // import { MessagePattern, Payload } from '@nestjs/microservices';
 import { CommandRpc } from '../utils/command-rpc.decorator';
 import { QueryRpc } from '../utils/query-rpc.decorator';
-import { ApiOperation, ApiQuery } from '@nestjs/swagger';
+import { ApiOperation, ApiParam, ApiQuery } from '@nestjs/swagger';
 import {
   CreateOrderDto,
   GetRestaurantOrdersDto,
@@ -32,6 +32,10 @@ export class RestaurantOrdersController {
 
   @Get('/restaurant/:restaurantId/orders')
   @ApiOperation({ description: 'get a restaurant orders' })
+  @ApiParam({
+    name: 'restaurantId',
+    example: 'ab51d4d3-e8d3-4754-828d-f943237ecd6f',
+  })
   @ApiQuery({
     description:
       'status for the type of orders returned. if no value is given all orders all returned.',
@@ -39,7 +43,7 @@ export class RestaurantOrdersController {
     enum: ['pending', 'completed'],
   })
   @QueryRpc('restaurant-orders', 'restaurant-orders', 'get_restaurant_orders')
-  async getRestaurantOrders(@Body() data: GetRestaurantOrdersDto) {
+  async getRestaurantOrders(data: GetRestaurantOrdersDto) {
     this.logger.verbose(this.getRestaurantOrders.name);
     const { __meta, ...d } = data;
     return this.service.getRestaurantOrders(d, __meta);
@@ -47,12 +51,13 @@ export class RestaurantOrdersController {
 
   @Get('/user/:userId/orders')
   @ApiOperation({ description: 'add a order' })
+  @ApiParam({ name: 'userId', example: 'ab51d4d3-e8d3-4754-828d-f943237ecd6f' })
   @QueryRpc(
     'restaurant-orders',
     'restaurant-orders',
     'get_user_restaurant_orders',
   )
-  async getUserRestaurantOrders(@Param() data: GetUserRestaurantOrdersDto) {
+  async getUserRestaurantOrders(data: GetUserRestaurantOrdersDto) {
     this.logger.verbose(this.getUserRestaurantOrders.name);
     const { __meta, ...d } = data;
     return this.service.getUserRestaurantOrders(d, __meta);
