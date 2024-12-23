@@ -73,21 +73,39 @@ export class RestaurantsService {
     meta: Metadata,
   ) {
     this.logger.log(this.setUserRestaurantPreferences.name);
-    //TODO: enable it
-    // if (meta?.user?.id !== data.user.id)
-    //   throw new HttpException(
-    //     `user trying to set preferences for user ${data.user.id}`,
-    //     HttpStatus.UNAUTHORIZED,
-    //   );
-    const restaurant = await this.repository.getRestaurantById(data.id);
-    if (restaurant)
-      throw new HttpException(
-        'Restaurant with the same id exists!',
-        HttpStatus.BAD_REQUEST,
-      );
-    const preference = await this.repository.getUserRestaurantPreferences(data);
-    if (preference) throw new DuplicateIdException(data.id);
-    return this.repository.setUserRestaurantPreferences(data);
+    try {
+      //TODO: enable it
+      // if (meta?.user?.id !== data.user.id)
+      //   throw new HttpException(
+      //     `user trying to set preferences for user ${data.user.id}`,
+      //     HttpStatus.UNAUTHORIZED,
+      //   );
+      const restaurant = await this.repository.getRestaurantById(data.id);
+      if (restaurant)
+        throw new HttpException(
+          'Restaurant with the same id exists!',
+          HttpStatus.BAD_REQUEST,
+        );
+      const preference =
+        await this.repository.getUserRestaurantPreferences(data);
+      if (preference) throw new DuplicateIdException(data.id);
+      return this.repository.setUserRestaurantPreferences(data);
+    } catch (error) {
+      this.logger.error(error);
+      return {
+        success: false,
+        data,
+        meta: {
+          messages: [
+            {
+              domain: 'Restaurants',
+              context: this.setUserRestaurantPreferences.name,
+              error: error.message,
+            },
+          ],
+        },
+      };
+    }
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
