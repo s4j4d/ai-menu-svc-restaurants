@@ -26,4 +26,4 @@ export class UserPreferencesEntity {
 export const UserPreferencesEntitySchema = SchemaFactory.createForClass(
   UserPreferencesEntity,
 );
-UserPreferencesEntitySchema.index({ user: 1 });
+UserPreferencesEntitySchema.index({ user: 1 }, { unique: false });

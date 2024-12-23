@@ -85,8 +85,8 @@ export class RestaurantsService {
         'Restaurant with the same id exists!',
         HttpStatus.BAD_REQUEST,
       );
-    const preference = await this.repository.getUserRestaurantPreferences(data);
-    if (preference) throw new DuplicateIdException(data.user.id);
+    // const preference = await this.repository.getUserRestaurantPreferences(data);
+    // if (preference) throw new DuplicateIdException(data.user.id);
     return this.repository.setUserRestaurantPreferences(data);
   }
 

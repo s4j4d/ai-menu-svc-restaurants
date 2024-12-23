@@ -18,15 +18,20 @@ async function bootstrap() {
       forbidNonWhitelisted: true,
       exceptionFactory: (errors) => {
         // Format validation errors
-        const customErrors = errors.map((err) => ({
-          field: err.property,
-          constraints: Object.values(err.constraints),
-        }));
+        const customErrors = (errors) =>
+          errors.map((err) => ({
+            field: err.property,
+            constraints:
+              err.children.length > 0
+                ? customErrors(err.children)
+                : Object.values(err.constraints),
+          }));
+        const decoratedErrors = customErrors(errors);
         // Throw a RpcException with a custom error response
         return new BadRequestException({
           status: 'error',
           message: 'Validation failed',
-          errors: customErrors,
+          errors: decoratedErrors,
         });
       },
     }),
