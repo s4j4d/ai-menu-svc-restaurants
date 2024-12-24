@@ -20,7 +20,7 @@ export class RestaurantOrdersRepository {
     private restaurantOrdersModel: Model<RestaurantOrderEntityDocument>,
   ) {}
 
-  async createOrder(data: CreateOrderDto) {
+  async createOrder(data: CreateOrderDto & { status: string }) {
     this.logger.verbose(this.createOrder.name);
     return new this.restaurantOrdersModel({ ...data, _id: data.id }).save();
   }
@@ -35,7 +35,20 @@ export class RestaurantOrdersRepository {
       const status = data.ordersStatus === 'pending' ? 'pending' : 'completed';
       Object.assign(query, { status });
     }
-    return this.restaurantOrdersModel.find(query).sort({ createdA: -1 });
+    return this.restaurantOrdersModel
+      .find(query, {
+        _id: 0,
+        id: '$_id',
+        user: 1,
+        status: 1,
+        tableNumber: 1,
+        paymentStatus: 1,
+        specialRequests: 1,
+        totalAmount: 1,
+        address: 1,
+        items: 1,
+      })
+      .sort({ createdA: -1 });
   }
 
   //TODO: add pagination for this endpoint

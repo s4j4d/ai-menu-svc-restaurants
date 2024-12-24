@@ -8,6 +8,7 @@ import { ApiHideProperty, ApiProperty } from '@nestjs/swagger';
 import { Metadata } from '../../utils/interfaces/metadata.interface';
 import { IdentifiableDto } from '../../utils/dtos';
 import { Type } from 'class-transformer';
+import { OrderStatus } from '../entities/order.entity';
 
 export class GetRestaurantOrdersDto {
   @ValidateNested({ each: true })
@@ -22,8 +23,9 @@ export class GetRestaurantOrdersDto {
   @IsString()
   @IsOptional()
   @ApiProperty({
-    description: 'restaurant id',
+    description: 'status of the orders',
     example: 'pending',
+    enum: OrderStatus,
   })
   ordersStatus?: string;
 

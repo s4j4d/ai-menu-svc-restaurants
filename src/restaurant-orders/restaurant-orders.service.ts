@@ -43,7 +43,7 @@ export class RestaurantOrdersService {
           `Pending order for the table ${data?.tableNumber} exists.`,
           HttpStatus.CONFLICT,
         );
-      await this.repository.createOrder(data);
+      await this.repository.createOrder({ ...data, status: 'pending' });
       return {
         success: true,
         data,

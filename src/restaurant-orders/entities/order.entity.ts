@@ -5,7 +5,7 @@ import { IdentifiableDto } from '../../utils/dtos';
 // Enum for Order Status
 export enum OrderStatus {
   PENDING = 'pending',
-  COMPLETED = 'completed',
+  DELIVERED = 'delivered',
   CANCELLED = 'cancelled',
 }
 
@@ -39,7 +39,7 @@ export class RestaurantOrderEntity {
   @Prop({ type: IdentifiableDto, required: true })
   user: IdentifiableDto;
 
-  @Prop({ required: true })
+  @Prop({ required: false })
   tableNumber?: number;
 
   @Prop({ type: IdentifiableDto, required: false })
@@ -51,14 +51,17 @@ export class RestaurantOrderEntity {
   @Prop({ type: Array<IdentifiableDto>, required: false })
   items?: OrderItem[];
 
-  @Prop({ required: false })
+  @Prop({ required: false, enum: OrderStatus })
   status?: string;
 
   // @Prop({ required: false })
   // invoices?: Invoice[];
 
-  @Prop({ enum: PaymentStatus, default: PaymentStatus.PENDING })
-  paymentStatus: PaymentStatus; // Payment status
+  @Prop({
+    required: false,
+    enum: PaymentStatus,
+  })
+  paymentStatus?: PaymentStatus; // Payment status
 
   @Prop({ default: '' })
   specialRequests?: string; // Any special requests for the order

@@ -2,10 +2,11 @@ import { Body, Controller, Get, Logger, Param, Post } from '@nestjs/common';
 // import { MessagePattern, Payload } from '@nestjs/microservices';
 import { CommandRpc } from '../utils/command-rpc.decorator';
 import { QueryRpc } from '../utils/query-rpc.decorator';
-import { ApiOperation, ApiParam, ApiQuery } from '@nestjs/swagger';
+import { ApiOperation, ApiParam, ApiQuery, ApiResponse } from '@nestjs/swagger';
 import {
   CreateOrderDto,
   GetRestaurantOrdersDto,
+  GetRestaurantOrdersResponseDto,
   GetUserRestaurantOrdersDto,
   // UpdateRestaurantOrderDto,
 } from './dto';
@@ -34,13 +35,54 @@ export class RestaurantOrdersController {
   @ApiOperation({ description: 'get a restaurant orders' })
   @ApiParam({
     name: 'restaurantId',
-    example: 'ab51d4d3-e8d3-4754-828d-f943237ecd6f',
   })
   @ApiQuery({
     description:
       'status for the type of orders returned. if no value is given all orders all returned.',
     name: 'status',
     enum: ['pending', 'completed'],
+  })
+  @ApiResponse({
+    status: 200,
+    type: GetRestaurantOrdersResponseDto,
+    example: {
+      status: true,
+      data: [
+        {
+          user: {
+            id: '4c74f9a2-7631-43f0-8c5b-208e447823b4',
+          },
+          tableNumber: 10,
+          totalAmount: 1200000,
+          items: [
+            {
+              id: '56b8ceda-a189-46e0-80a8-f9cdc5d6c382',
+              name: 'sajad-meat',
+            },
+          ],
+          status: 'pending',
+          specialRequests: 'please make my food spicy as shit.',
+          id: '4676577b-2bb4-43d0-9d00-5a266b617c0b',
+        },
+        {
+          user: {
+            id: '4c74f9a2-7631-43f0-8c5b-208e447823b4',
+          },
+          tableNumber: 10,
+          totalAmount: 1200000,
+          items: [
+            {
+              id: '56b8ceda-a189-46e0-80a8-f9cdc5d6c382',
+              name: 'sajad-meat',
+            },
+          ],
+          status: 'delivered',
+          paymentStatus: 'paid',
+          specialRequests: 'please make my food spicy as shit.',
+          id: '4676577b-2bb4-43d0-9d00-5a266b617c0s',
+        },
+      ],
+    },
   })
   @QueryRpc('restaurant-orders', 'restaurant-orders', 'get_restaurant_orders')
   async getRestaurantOrders(data: GetRestaurantOrdersDto) {
